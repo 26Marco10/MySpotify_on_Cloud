@@ -58,3 +58,15 @@ Fai in modo che queste cose di TAP vengano messe in produzione utilizzando una p
 
 Prima parte: rendi tutto TAP una applicazione Kubernetes e mandalo in esecuzione con un cluster Kubernetes
 Seconda parte: GitHub action
+
+
+Minikube:
+- minikube start
+- minikube kubectl -- get po -A
+- minikube dashboard
+- minikube stop
+- minikube delete --all
+
+
+
+
