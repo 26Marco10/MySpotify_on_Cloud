@@ -72,6 +72,9 @@ ssh -i nomefilechiave.pem nomeutente(normalmente è ubuntu)@dominio (per acceder
 scp -i nomefilechiave.pem file nomeutente(normalmente è ubuntu)@dominio:path(/home/ubuntu) (per copiare un file all'istanza aws)
 
 All'interno della macchina:
- - copia i file setup e manifest e poi esegui setup
+ - copia i file setup e i file in kubernetes e poi esegui setup
 sudo usermod -aG docker $USER && newgrp docker
 minikube start --driver=none --container-runtime=docker --cri-socket=/var/run/cri-dockerd.sock
+cd kubernetes
+kubectl apply -f .
+kubectl get pods -n elk
