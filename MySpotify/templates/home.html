@@ -85,10 +85,10 @@
 
   <nav>
     <ul>
-      <li><a href="http://localhost:8000/home">Home</a></li>
-      <li><a href="http://localhost:8000/search">Browse</a></li>
-      <li><a href="http://localhost:8000/playlists">Your Library</a></li>
-      <li><a href="http://localhost:8000/favorites">Favorites</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/home">Home</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/search">Browse</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/playlists">Your Library</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/favorites">Favorites</a></li>
       <li><a onclick="Saved()">Saved</a></li>
     </ul>
   </nav>
@@ -97,7 +97,7 @@
     <h2>Featured Playlists</h2>
     <div class="playlist">
         {% for playlist in playlists %}
-        <a href="http://localhost:8000/playlist/{{ playlist.id }}/{{playlist.name}}" class="playlist-link" style="text-decoration: none;">
+        <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/playlist/{{ playlist.id }}/{{playlist.name}}" class="playlist-link" style="text-decoration: none;">
         <div class="playlist-item">
           <img src="{{ playlist.image }}" alt="{{ playlist.name }}">
           <h3>{{ playlist.name }}</h3>
@@ -130,7 +130,7 @@
 
   function Saved() {
     // Redirect the entire page to the saved page, not only the iframe
-    parent.location.href = 'http://localhost:8000/local';
+    parent.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/local';
   }
 </script>
 </html>

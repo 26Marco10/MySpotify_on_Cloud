@@ -266,10 +266,10 @@
 
   <nav>
     <ul>
-      <li><a href="http://localhost:8000/home">Home</a></li>
-      <li><a href="http://localhost:8000/search">Browse</a></li>
-      <li><a href="http://localhost:8000/playlists">Your Library</a></li>
-      <li><a href="http://localhost:8000/favorites">Favorites</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/home">Home</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/search">Browse</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/playlists">Your Library</a></li>
+      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/favorites">Favorites</a></li>
       <li><a onclick="Saved()">Saved</a></li>
     </ul>
   </nav>
@@ -308,7 +308,7 @@
                 <h4 style="padding-top: 6px;">{{ song.name }}</h4>
                 <p>{{ song.artist }}</p>
             </div>
-            <a href="http://localhost:8000/download/{{ song.name }}/{{ song.artist }}" class="download-button" onclick="preventPlayer(event)"><i class="fas fa-download"></i></a>
+            <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/download/{{ song.name }}/{{ song.artist }}" class="download-button" onclick="preventPlayer(event)"><i class="fas fa-download"></i></a>
         </li>    
       {% endfor %}
     </ul>
@@ -318,7 +318,7 @@
     <h2 id="albums-title">Albums</h2>
     <div class="albums">
         {% for album in albums %}
-        <a href="http://localhost:8000/albums/{{ album.id }}" class="album-link" style="text-decoration: none;">
+        <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/albums/{{ album.id }}" class="album-link" style="text-decoration: none;">
         <div class="album-item">
           <img src="{{ album.image }}" alt="{{ album.name }}">
           <h4>{{album.artist}} - {{ album.name }}</h4>
@@ -395,7 +395,7 @@
   <script>
     function Player(name, artist) {
       var targetIframe = parent.document.getElementById('right');
-      targetIframe.src = 'http://localhost:8000/player_artist/{{artist.id}}/' + name + '/' + artist;
+      targetIframe.src = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/player_artist/{{artist.id}}/' + name + '/' + artist;
     }
   
     function preventPlayer(event) {
@@ -404,7 +404,7 @@
 
     function Saved() {
     // Redirect the entire page to the saved page, not only the iframe
-    parent.location.href = 'http://localhost:8000/local';
+    parent.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/local';
   }
   </script>
 </body>

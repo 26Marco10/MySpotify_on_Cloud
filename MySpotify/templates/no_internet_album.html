@@ -174,7 +174,7 @@
 
   <nav>
     <ul>
-        <li><a href="http://localhost:8000/no_internet">Home</a></li>
+        <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/no_internet">Home</a></li>
         <li><a onclick="Online()">Online</a></li>
     </ul>
   </nav>
@@ -189,7 +189,7 @@
                 <h4 style="padding-top: 6px;">{{ song.name }}</h4>
                 <p>{{ song.artist }}</p>
             </div>
-            <a href="http://localhost:8000/delete_from_playlist/{{playlist_name}}/{{song.name}}/{{song.artist}}" class="download-button" onclick="delete_song(event, '{{song.name}}','{{song.artist}}', '{{album_name}}')"><i class="fas fa-trash"></i></a>
+            <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_from_playlist/{{playlist_name}}/{{song.name}}/{{song.artist}}" class="download-button" onclick="delete_song(event, '{{song.name}}','{{song.artist}}', '{{album_name}}')"><i class="fas fa-trash"></i></a>
         </li>    
       {% endfor %}
     </ul>
@@ -203,7 +203,7 @@
 <script>
   function Player(song, artist, album_name) {
     var targetIframe = parent.document.getElementById('iframe2');
-    targetIframe.src = 'http://localhost:8000/player_local/albums/' + album_name + '/' + song + '/' + artist;
+    targetIframe.src = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/player_local/albums/' + album_name + '/' + song + '/' + artist;
   }
 </script>
 
@@ -229,12 +229,12 @@
 
   function Online() {
     // Redirect the entire page to the saved page, not only the iframe
-    parent.location.href = 'http://localhost:8000/';
+    parent.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/';
   }
 
   function delete_song(event, song, artist, album_name) {
     event.preventDefault(); // Impedisce il comportamento predefinito del click
-    window.location.href = 'http://localhost:8000/delete_from_album/' + album_name + '/' + song + '/' + artist;
+    window.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_from_album/' + album_name + '/' + song + '/' + artist;
     event.stopPropagation();
   }
 </script>
