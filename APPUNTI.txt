@@ -78,3 +78,5 @@ minikube start --driver=none --container-runtime=docker --cri-socket=/var/run/cr
 cd kubernetes
 kubectl apply -f .
 kubectl get pods -n elk
+kubectl port-forward svc/nomeservizio porta:porta -n elk
+vai su dominio:portaesposta(tipo 30002)
