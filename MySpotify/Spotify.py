@@ -18,6 +18,9 @@ import html
 import os
 import logging
 import logstash
+import re
+import nltk
+from nrclex import NRCLex
 
 # Set up Logstash
 host = 'logstash'
@@ -31,6 +34,25 @@ load_dotenv()
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 genius_token = os.getenv("GENIUS_API_TOKEN")
+
+
+# Definire la funzione di preprocessing
+def preprocess_text(text):
+    if text:
+        # Convertire tutto in minuscolo
+        text = text.lower()
+        # Rimuovere la punteggiatura
+        text = re.sub(r'[^\w\s]', '', text)
+        # Rimuovere spazi bianchi extra
+        text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+def emotion_analysis(text):
+    if text:
+        emotion = NRCLex(text).top_emotions
+        if emotion:
+            return emotion[0][0]
+        return "not applicable"
 
 global max_offset_for_favorites
 
@@ -860,7 +882,8 @@ def player(playlist_id,song_name, artist_name):
         "artist": artist_name,
         "lyrics": lyrics,
         "genre": get_genre_artist(artist_name, token),
-        "id": search_for_song(token, song_name + artist_name)[0]["id"]
+        "id": search_for_song(token, song_name + artist_name)[0]["id"],
+        "emotion": emotion_analysis(preprocess_text(lyrics))
     }
     test_logger.info(json.dumps(song_log))
     return render_template("player.html", song=song)
@@ -927,7 +950,8 @@ def player_album(album_id,song_name, artist_name):
         "artist": artist_name,
         "lyrics": lyrics,
         "genre": get_genre_artist(artist_name, token),
-        "id": search_for_song(token, song_name + artist_name)[0]["id"]
+        "id": search_for_song(token, song_name + artist_name)[0]["id"],
+        "emotion": emotion_analysis(preprocess_text(lyrics))
     }
     test_logger.info(json.dumps(song_log))
     return render_template("player_album.html", song=song)
@@ -967,7 +991,8 @@ def player_song(song_name, artist_name):
         "artist": artist_name,
         "lyrics": lyrics,
         "genre": get_genre_artist(artist_name, token),
-        "id": search_for_song(token, song_name + artist_name)[0]["id"]
+        "id": search_for_song(token, song_name + artist_name)[0]["id"],
+        "emotion": emotion_analysis(preprocess_text(lyrics))
     }
     test_logger.info(json.dumps(song_log))
     return render_template("player_single_song.html", song=song)
@@ -1034,7 +1059,8 @@ def player_artist(artist_id,song_name, artist_name):
         "artist": artist_name,
         "lyrics": lyrics,
         "genre": get_genre_artist(artist_name, token),
-        "id": search_for_song(token, song_name + artist_name)[0]["id"]
+        "id": search_for_song(token, song_name + artist_name)[0]["id"],
+        "emotion": emotion_analysis(preprocess_text(lyrics))
     }
     test_logger.info(json.dumps(song_log))
     return render_template("player_artist.html", song=song)
@@ -1138,7 +1164,8 @@ def player_favorite(song_name, artist_name):
         "artist": artist_name,
         "lyrics": lyrics,
         "genre": get_genre_artist(artist_name, token),
-        "id": search_for_song(token, song_name + artist_name)[0]["id"]
+        "id": search_for_song(token, song_name + artist_name)[0]["id"],
+        "emotion": emotion_analysis(preprocess_text(lyrics))
     }
     test_logger.info(json.dumps(song_log))
     return render_template("player_favorite.html", song=song)   

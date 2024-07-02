@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    node.type: myspotify
+  name: myspotify
+  namespace: elk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-spotify
+  template:
+    metadata:
+      labels:
+        app: my-spotify
+    spec:
+      containers:
+        - name: my-spotify
+          image: 26marco10/my-spotify:latest
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    es.service: myspotify-service
+  name: my-spotify-service
+  namespace: elk
+spec:
+  ports:
+    - name: "8000"
+      port: 8000
+      targetPort: 8000
+      nodePort: 32008
+  selector:
+    app: my-spotify
+  type: NodePort
+  
+

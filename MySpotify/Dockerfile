@@ -12,6 +12,7 @@ COPY static /app/static
 COPY .env /app
 
 RUN pip install --no-cache-dir -r requirements.txt
+RUN python3 -m textblob.download_corpora
 
 # Esponi la porta su cui il server Flask ascolterà le richieste
 EXPOSE 8000

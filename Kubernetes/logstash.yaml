@@ -1,0 +1,117 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-yaml-config
+  namespace: elk
+  labels:
+    k8s-app: logstash
+data:
+  logstash.yml: |-
+    http.host: "0.0.0.0"
+    xpack.monitoring.enabled: false
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-conf-config
+  namespace: elk
+  labels:
+    k8s-app: logstash
+data:
+  logstash.conf: |-
+      input {
+          tcp {
+              port => 5959
+              codec => json_lines
+          }
+      }
+
+      filter {
+          # Analizza il messaggio JSON in ingresso e estrai i campi separati
+          json {
+              source => "message"
+              remove_field => ["message"]
+          }
+
+          # Rimuovi tutti i campi tranne quelli desiderati
+          mutate {
+              remove_field => ["@version", "host", "path", "tags", "type", "ecs","level","taskName","logger_name"]
+          }
+      }
+
+      output {
+          stdout { codec => rubydebug }
+          # Qui puoi aggiungere ulteriori output come ad esempio l'invio a Elasticsearch
+          elasticsearch {
+              hosts => ["es-service:9200"]
+              index => "music"
+          }
+      }
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: elk
+  labels:
+    k8s-app: logstash
+    app: logstash
+    node.type: logstash-node
+spec:
+ #replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: logstash
+      app: logstash
+      node.type: logstash-node
+  template:
+    metadata:
+      labels:
+        k8s-app: logstash
+        app: logstash
+        node.type: logstash-node
+    spec:
+      containers:
+      - name: logstash
+        image: docker.elastic.co/logstash/logstash:7.17.0
+        volumeMounts:
+          - name: logstash-config
+            mountPath: /usr/share/logstash/pipeline/logstash.conf
+            readOnly: true
+            subPath: logstash.conf 
+          - name: logstash-yaml
+            mountPath: /usr/share/logstash/config/logstash.yml
+            readOnly: true
+            subPath: logstash.yml  
+        ports:
+            - containerPort: 5959    
+      volumes:
+      - name: logstash-config
+        configMap:
+          name: logstash-conf-config
+      - name: logstash-yaml
+        configMap:
+          name: logstash-yaml-config
+      restartPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    logstash.service: logstash
+  name: logstash
+  namespace: elk
+spec:
+  ports:
+    - name: "5959"
+      port: 5959
+      targetPort: 5959
+      nodePort: 30001
+  selector:
+    node.type: logstash-node
+  type: NodePort
+
