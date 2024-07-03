@@ -107,6 +107,9 @@ jobs:
       - name: Run setup.sh
         run: ./setup.sh
 
+      - name: Set usermode
+        run: sudo usermod -aG docker $USER && newgrp docker
+
       - name: Start minikube
         run: minikube start --driver=none --container-runtime=docker --cri-socket=/var/run/cri-dockerd.sock
 
