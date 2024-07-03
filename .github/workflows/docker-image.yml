@@ -64,3 +64,26 @@ jobs:
           tags: ${{ matrix.image.tag }}
           context: ${{ matrix.image.context }}
           push: true
+  
+  connect-to-ec2:
+    needs: build-and-push
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Configura chiave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/aws_key.pem
+          chmod 600 ~/.ssh/aws_key.pem
+
+      - name: Aggiungi host remoto a known_hosts
+        run: |
+          ssh-keyscan -H dominio >> ~/.ssh/known_hosts
+
+      - name: Copia file su istanza AWS
+        run: scp -i ~/.ssh/aws_key.pem setup.sh ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com:/home/ubuntu/
+
+    
