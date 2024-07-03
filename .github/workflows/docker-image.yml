@@ -39,6 +39,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Replace localhost with AWS domain
+        run: |
+          sed -i 's|localhost|ec2-54-160-125-12.compute-1.amazonaws.com|g' $(grep -rl 'localhost' .)
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:

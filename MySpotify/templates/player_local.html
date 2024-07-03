@@ -156,7 +156,7 @@
             previous_artist = "{{prev_artist_name}}";
             previous_name = previous_name.replace("&#39;", "'");
             previous_artist = previous_artist.replace("&#39;", "'");
-            window.location.href = "http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/player_local/songs/" + previous_name + "/" + previous_artist;
+            window.location.href = "http://localhost:32008/player_local/songs/" + previous_name + "/" + previous_artist;
         }
 
         function next() {
@@ -164,7 +164,7 @@
             next_artist = "{{next_artist_name}}";
             next_name = next_name.replace("&#39;", "'");
             next_artist = next_artist.replace("&#39;", "'");
-            window.location.href = "http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/player_local/songs/" + next_name + "/" + next_artist;
+            window.location.href = "http://localhost:32008/player_local/songs/" + next_name + "/" + next_artist;
         }
 
     </script>

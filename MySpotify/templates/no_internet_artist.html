@@ -175,7 +175,7 @@
 
   <nav>
     <ul>
-      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/no_internet">Home</a></li>
+      <li><a href="http://localhost:32008/no_internet">Home</a></li>
       <li><a onclick="Online()">Online</a></li>
     </ul>
   </nav>
@@ -190,7 +190,7 @@
                 <h4 style="padding-top: 6px;">{{ song.name }}</h4>
                 <p>{{ song.artist }}</p>
             </div>
-            <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_from_artist/{{song.artist}}/{{song.name}}" class="download-button" onclick="delete_song(event, '{{song.name}}','{{song.artist}}')"><i class="fas fa-trash"></i></a>
+            <a href="http://localhost:32008/delete_from_artist/{{song.artist}}/{{song.name}}" class="download-button" onclick="delete_song(event, '{{song.name}}','{{song.artist}}')"><i class="fas fa-trash"></i></a>
         </li>    
       {% endfor %}
     </ul>
@@ -204,7 +204,7 @@
 <script>
   function Player(song, artist, artist_name) {
     var targetIframe = parent.document.getElementById('iframe2');
-    targetIframe.src = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/player_local/artists/' + artist_name + '/' + song;
+    targetIframe.src = 'http://localhost:32008/player_local/artists/' + artist_name + '/' + song;
   }
 </script>
 
@@ -230,12 +230,12 @@
 
   function Online() {
     // Redirect the entire page to the saved page, not only the iframe
-    parent.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/';
+    parent.location.href = 'http://localhost:32008/';
   }
 
   function delete_song(event, song, artist) {
     event.preventDefault(); // Impedisce il comportamento predefinito del click
-    window.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_from_artist/'+ artist + '/' + song;
+    window.location.href = 'http://localhost:32008/delete_from_artist/'+ artist + '/' + song;
     event.stopPropagation();
   }
 </script>

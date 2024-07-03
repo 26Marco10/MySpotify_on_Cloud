@@ -72,7 +72,7 @@ def get_token(code):
     data = {
         "grant_type": "client_credentials",
         "code": code,
-        "redirect_uri": "http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/"
+        "redirect_uri": "http://localhost:32008/"
     }
 
     result = requests.post(url, headers=headers, data=data)
@@ -324,7 +324,7 @@ def get_genre_artist(artist_name, token):
 
 AUTH_URL = 'https://accounts.spotify.com/authorize'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
-REDIRECT_URI = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/callback' 
+REDIRECT_URI = 'http://localhost:32008/callback' 
 SCOPE = [
     "user-read-private user-library-modify  user-library-read user-read-email playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative"
 ]

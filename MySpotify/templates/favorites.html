@@ -115,16 +115,16 @@
 
   <nav>
     <ul>
-      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/home">Home</a></li>
-      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/search">Browse</a></li>
-      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/playlists">Your Library</a></li>
-      <li><a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/favorites">Favorites</a></li>
+      <li><a href="http://localhost:32008/home">Home</a></li>
+      <li><a href="http://localhost:32008/search">Browse</a></li>
+      <li><a href="http://localhost:32008/playlists">Your Library</a></li>
+      <li><a href="http://localhost:32008/favorites">Favorites</a></li>
       <li><a onclick="Saved()">Saved</a></li>
     </ul>
   </nav>
 
   <div class="container">
-    <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/download_all_favorites" class="download-button_1"><i class="fas fa-download"></i></a>
+    <a href="http://localhost:32008/download_all_favorites" class="download-button_1"><i class="fas fa-download"></i></a>
     <h2 class="playlist-heading">Favorites</h2>
     <ul class="song-list">
       <!-- Per le canzoni, utilizzare lo stesso stile dei risultati di Spotify -->
@@ -135,7 +135,7 @@
                 <h4 style="padding-top: 6px;">{{ song.name }}</h4>
                 <p>{{ song.artist }}</p>
             </div>
-            <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/download/{{ song.name }}/{{ song.artist }}" class="download-button" onclick="preventPlayer(event)"><i class="fas fa-download"></i></a>
+            <a href="http://localhost:32008/download/{{ song.name }}/{{ song.artist }}" class="download-button" onclick="preventPlayer(event)"><i class="fas fa-download"></i></a>
         </li>    
       {% endfor %}
     </ul>
@@ -144,7 +144,7 @@
 <script>
   function Player(name, artist) {
     var targetIframe = parent.document.getElementById('right');
-    targetIframe.src = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/player_favorite/' + name + '/' + artist;
+    targetIframe.src = 'http://localhost:32008/player_favorite/' + name + '/' + artist;
   }
 
   function preventPlayer(event) {
@@ -153,7 +153,7 @@
 
   function Saved() {
     // Redirect the entire page to the saved page, not only the iframe
-    parent.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/local';
+    parent.location.href = 'http://localhost:32008/local';
   }
 </script>
 </body>

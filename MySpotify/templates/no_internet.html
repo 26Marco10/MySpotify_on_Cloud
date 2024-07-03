@@ -225,7 +225,7 @@
     <h2>Playlists</h2>
     <div class="playlist">
         {% for playlist in playlists %}
-        <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/no_internet_playlist/{{playlist.name}}" class="playlist-link" style="text-decoration: none;">
+        <a href="http://localhost:32008/no_internet_playlist/{{playlist.name}}" class="playlist-link" style="text-decoration: none;">
         <div class="playlist-item">
           <h3>{{ playlist.name }}</h3>
           <div class="delete-button" onclick="delete_playlist(event, '{{playlist.name}}')"><i class="fas fa-trash"></i></div>
@@ -247,7 +247,7 @@
                 <h4 style="padding-top: 6px;">{{ song.name }}</h4>
                 <p>{{ song.artist }}</p>
             </div>
-            <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_song/{{song.name}}/{{song.artist}}" class="download-button" onclick="delete_song(event, '{{song.name}}','{{song.artist}}')"><i class="fas fa-trash"></i></a>
+            <a href="http://localhost:32008/delete_song/{{song.name}}/{{song.artist}}" class="download-button" onclick="delete_song(event, '{{song.name}}','{{song.artist}}')"><i class="fas fa-trash"></i></a>
         </li>    
       {% endfor %}
     </ul>
@@ -258,7 +258,7 @@
     <h2>Albums</h2>
     <div class="album">
         {% for album in albums %}
-        <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/no_internet_album/{{album.name}}" class="album-link" style="text-decoration: none;">
+        <a href="http://localhost:32008/no_internet_album/{{album.name}}" class="album-link" style="text-decoration: none;">
         <div class="album-item">
           <h3>{{ album.name }}</h3>
           <div class="delete-button" onclick="delete_album(event, '{{album.name}}')"><i class="fas fa-trash"></i></div>
@@ -274,7 +274,7 @@
     <h2>Artist</h2>
     <div class="artist">
         {% for artist in artists %}
-        <a href="http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/no_internet_artist/{{artist}}" class="artist-link" style="text-decoration: none;">
+        <a href="http://localhost:32008/no_internet_artist/{{artist}}" class="artist-link" style="text-decoration: none;">
         <div class="artist-item">
           <h3>{{ artist }}</h3>
         </div>
@@ -343,28 +343,28 @@
 <script>
   function Player(song, artist) {
     var targetIframe = parent.document.getElementById('iframe2');
-    targetIframe.src = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/player_local/songs/' + song + '/' + artist;
+    targetIframe.src = 'http://localhost:32008/player_local/songs/' + song + '/' + artist;
   }
   function Online() {
     // Redirect the entire page to the saved page, not only the iframe
-    parent.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/';
+    parent.location.href = 'http://localhost:32008/';
   }
 
   function delete_playlist(event, playlist) {
     event.preventDefault(); // Impedisce il comportamento predefinito del click
-    window.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_playlist/' + playlist;
+    window.location.href = 'http://localhost:32008/delete_playlist/' + playlist;
     event.stopPropagation();
   }
 
   function delete_album(event, album) {
     event.preventDefault(); // Impedisce il comportamento predefinito del click
-    window.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_album/' + album;
+    window.location.href = 'http://localhost:32008/delete_album/' + album;
     event.stopPropagation();
   }
 
   function delete_song(event, song, artist) {
     event.preventDefault(); // Impedisce il comportamento predefinito del click
-    window.location.href = 'http://ec2-100-26-163-171.compute-1.amazonaws.com:32008/delete_song/' + song + '/' + artist;
+    window.location.href = 'http://localhost:32008/delete_song/' + song + '/' + artist;
     event.stopPropagation();
   }
 </script>

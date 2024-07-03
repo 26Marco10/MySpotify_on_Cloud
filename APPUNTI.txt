@@ -78,5 +78,6 @@ minikube start --driver=none --container-runtime=docker --cri-socket=/var/run/cr
 cd kubernetes
 kubectl apply -f .
 kubectl get pods -n elk
-kubectl port-forward svc/nomeservizio porta:porta -n elk
+sostituisci in tutti i file di myspotify il dominio dell'istanza e poi pusha
+kubectl port-forward svc/nomeservizio porta:porta(per esempio 8000:8000) -n elk
 vai su dominio:portaesposta(tipo 30002)
