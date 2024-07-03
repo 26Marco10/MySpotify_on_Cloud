@@ -1,5 +1,5 @@
 name: dockerimage
-run-name: Docker Pushing
+run-name: All in One
 
 on:
   push:
@@ -81,7 +81,7 @@ jobs:
 
       - name: Aggiungi host remoto a known_hosts
         run: |
-          ssh-keyscan -H dominio >> ~/.ssh/known_hosts
+          ssh-keyscan -H ec2-54-160-125-12.compute-1.amazonaws.com >> ~/.ssh/known_hosts
 
       - name: Copia file su istanza AWS
         run: scp -i ~/.ssh/aws_key.pem setup.sh ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com:/home/ubuntu/
