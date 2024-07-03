@@ -102,10 +102,10 @@ jobs:
         run: ssh -i ~/.ssh/aws_key.pem ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com
 
       - name: Modify permissions
-        run: chmod +x /home/ubuntu/setup.sh
+        run: chmod +x setup.sh
 
       - name: Run setup.sh
-        run: /home/ubuntu/setup.sh
+        run: ./setup.sh
 
       - name: Start minikube
         run: minikube start --driver=none --container-runtime=docker --cri-socket=/var/run/cri-dockerd.sock
