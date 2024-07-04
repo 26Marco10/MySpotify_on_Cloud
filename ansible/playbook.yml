@@ -19,9 +19,6 @@
     - name: Run setup.sh
       shell: "./setup.sh"
 
-    - name: Set User Mode
-      shell: "sudo usermod -aG docker $USER && newgrp docker"
-
     - name: Delete Minikube
       shell: "minikube delete"
 
@@ -33,9 +30,35 @@
       become: false
       shell: "kubectl apply -f /home/ubuntu/kubernetes/"
 
-    - name: Port Forwarding
+    - name: Wait for myspotify pod to be running
       become: false
-      shell: "sleep 10 && kubectl port-forward service/my-spotify-service 8080:8000 -n elk"
+      shell: |
+        until kubectl get pods -l app=myspotify -o jsonpath='{.items[0].status.phase}' | grep -m 1 'Running'; do
+          sleep 1
+        done
+
+    - name: Get the name of the myspotify pod
+      become: false
+      shell: "kubectl get pods -n elk -l app=myspotify -o jsonpath='{.items[0].metadata.name}'"
+      register: myspotify_pod_name
+
+    - name: Perform port forwarding for myspotify pod
+      become: false
+      shell: "kubectl port-forward {{ myspotify_pod_name.stdout }} 8080:8000 -n elk"
+      async: 600
+      poll: 0
+      register: port_forward_job
+
+    - name: Wait for port forwarding to be established
+      become: false
+      async_status:
+        jid: "{{ port_forward_job.ansible_job_id }}"
+      register: job_result
+      until: job_result.finished
+      retries: 5
+      delay: 5
+
+    
 
     
 
