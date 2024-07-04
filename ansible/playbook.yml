@@ -39,7 +39,7 @@
 
     - name: Get the name of the myspotify pod
       become: false
-      shell: "kubectl get pods -n elk -l app=myspotify -o jsonpath='{.items[0].metadata.name}'"
+      shell: "kubectl get pods -n elk -l app=my-spotify -o jsonpath='{.items[0].metadata.name}'"
       register: myspotify_pod_name
 
     - name: Perform port forwarding for myspotify pod
