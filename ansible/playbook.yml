@@ -19,9 +19,6 @@
     - name: Run setup.sh
       shell: "./setup.sh"
 
-    - name: Set User Mode
-      shell: "sudo usermod -aG docker $USER && newgrp docker"
-
     - name: Delete Minikube
       shell: "minikube delete"
 
