@@ -10,6 +10,15 @@
         dest: /home/ubuntu/kubernetes/
         mode: "777"
 
+    - name: Copy setup.sh from GitHub
+      copy:
+        src: ../setup.sh
+        dest: /home/ubuntu/
+        mode: "777"
+
+    - name: Run setup.sh
+      shell: "./setup.sh"
+
     - name: Set User Mode
       shell: "sudo usermod -aG docker $USER && newgrp docker"
 
@@ -22,11 +31,11 @@
 
     - name: Apply Kubernetes Manifests
       become: false
-      shell: "sleep 30 && kubectl apply -f /home/ubuntu/kubernetes/"
+      shell: "kubectl apply -f /home/ubuntu/kubernetes/"
 
     - name: Port Forwarding
       become: false
-      shell: "sleep 40 && kubectl port-forward service/my-spotify-service 8080:8000 -n elk"
+      shell: "sleep 10 && kubectl port-forward service/my-spotify-service 8080:8000 -n elk"
 
     
 

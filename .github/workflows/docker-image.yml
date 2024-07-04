@@ -1,5 +1,5 @@
 name: dockerimage
-run-name: All in One
+run-name: Docker Image Push
 
 on:
   push:
