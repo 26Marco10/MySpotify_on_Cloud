@@ -1,0 +1,32 @@
+---
+
+- hosts: EC2_server
+  become: true
+  tasks:
+
+    - name: Copy Kubernetes Manifests from GitHub
+      copy:
+        src: ../Kubernetes/
+        dest: /home/ubuntu/kubernetes/
+        mode: "777"
+
+    - name: Set User Mode
+      shell: "sudo usermod -aG docker $USER && newgrp docker"
+
+    - name: Delete Minikube
+      shell: "minikube delete"
+
+    - name: Start Minikube
+      become: false
+      shell: "minikube start --driver=none --container-runtime=docker --cri-socket=/var/run/cri-dockerd.sock"
+
+    - name: Apply Kubernetes Manifests
+      become: false
+      shell: "sleep 30 && kubectl apply -f /home/ubuntu/kubernetes/"
+
+    - name: Port Forwarding
+      become: false
+      shell: "sleep 40 && kubectl port-forward service/my-spotify-service 8080:8000 -n elk"
+
+    
+

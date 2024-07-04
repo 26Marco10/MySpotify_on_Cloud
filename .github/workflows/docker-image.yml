@@ -44,7 +44,7 @@ jobs:
         with:
           files: '**/*.html'
           search-text: 'localhost'
-          replacement-text: 'ec2-54-160-125-12.compute-1.amazonaws.com'
+          replacement-text: ${{ secrets.EC2_DOMAIN }}
           encoding: 'utf8'
           max-parallelism: 10
 
@@ -53,7 +53,7 @@ jobs:
         with:
           files: '**/*.py'
           search-text: 'localhost'
-          replacement-text: 'ec2-54-160-125-12.compute-1.amazonaws.com'
+          replacement-text: ${{ secrets.EC2_DOMAIN }}
           encoding: 'utf8'
           max-parallelism: 10
 
@@ -65,52 +65,4 @@ jobs:
           context: ${{ matrix.image.context }}
           push: true
   
-  connect-to-ec2:
-    needs: build-and-push
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Configura chiave SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/aws_key.pem
-          chmod 600 ~/.ssh/aws_key.pem
-
-      - name: Aggiungi host remoto a known_hosts
-        run: |
-          ssh-keyscan -H ec2-54-160-125-12.compute-1.amazonaws.com >> ~/.ssh/known_hosts
-
-      - name: Copia file su istanza AWS
-        run: scp -i ~/.ssh/aws_key.pem setup.sh ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com:/home/ubuntu/
-      
-      - name: Copia file elastic.yaml su istanza AWS
-        run: scp -i ~/.ssh/aws_key.pem Kubernetes/elastic.yaml ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com:/home/ubuntu/
-
-      - name: Copia file kibana.yaml su istanza AWS
-        run: scp -i ~/.ssh/aws_key.pem Kubernetes/kibana.yaml ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com:/home/ubuntu/
-
-      - name: Copia file myspotify.yaml su istanza AWS
-        run: scp -i ~/.ssh/aws_key.pem Kubernetes/myspotify.yaml ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com:/home/ubuntu/
-
-      - name: Copia file logstash.yaml su istanza AWS
-        run: scp -i ~/.ssh/aws_key.pem Kubernetes/logstash.yaml ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com:/home/ubuntu/
-
-      - name: Connect to EC2
-        run: ssh -i ~/.ssh/aws_key.pem ubuntu@ec2-54-160-125-12.compute-1.amazonaws.com
-
-      - name: Modify permissions
-        run: chmod +x setup.sh
-
-      - name: Run setup.sh
-        run: ./setup.sh
-
-      - name: Set usermode
-        run: sudo usermod -aG docker $USER && newgrp docker
-
-      - name: Start minikube
-        run: minikube start --driver=none --container-runtime=docker --cri-socket=/var/run/cri-dockerd.sock
-
-    
+  
