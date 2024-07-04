@@ -1,0 +1,33 @@
+---
+
+- hosts: EC2_server
+  become: true
+  tasks:
+  
+    - name: Apply Kubernetes Manifests
+      become: false
+      shell: "kubectl apply -f /home/ubuntu/kubernetes/"
+
+    - name: Wait for kibana pod to be running
+      become: false
+      shell: |
+        until kubectl get pods -n elk -l node.type=kibana -o jsonpath='{.items[0].status.phase}' | grep -m 1 '1/1'; do
+          sleep 1
+        done
+
+    - name: Get the name of the myspotify pod
+      become: false
+      shell: "kubectl get pods -n elk -l node.type=kibana -o jsonpath='{.items[0].metadata.name}'"
+      register: kibana_pod_name
+
+    - name: Perform port forwarding for myspotify pod
+      become: false
+      shell: "kubectl port-forward {{ kibana_pod_name.stdout }} 5601:5601 -n elk"
+      async: 600
+      poll: 0
+
+
+    
+
+    
+
