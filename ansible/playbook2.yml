@@ -7,13 +7,13 @@
     - name: Wait for kibana pod to be running
       become: false
       shell: |
-        until kubectl get pods -l node.type=kibana -n elk | grep -m 1 '1/1'; do
+        until kubectl get pods -l node.type=kibana-node -n elk | grep -m 1 '1/1'; do
           sleep 1
         done
 
     - name: Get the name of the myspotify pod
       become: false
-      shell: "kubectl get pods -l node.type=kibana -n elk -o jsonpath='{.items[0].metadata.name}'"
+      shell: "kubectl get pods -l node.type=kibana-node -n elk -o jsonpath='{.items[0].metadata.name}'"
       register: kibana_pod_name
 
     - name: Perform port forwarding for myspotify pod
