@@ -20,7 +20,7 @@
       shell: "./setup.sh"
 
     - name: Delete Minikube
-      shell: "minikube delete"
+      shell: "minikube delete --all"
 
     - name: Start Minikube
       become: false
@@ -47,16 +47,25 @@
       shell: "kubectl port-forward {{ myspotify_pod_name.stdout }} 8080:8000 -n elk"
       async: 600
       poll: 0
-      register: port_forward_job
 
-    - name: Wait for port forwarding to be established
+    - name: Wait for kibana pod to be running
       become: false
-      async_status:
-        jid: "{{ port_forward_job.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
-      retries: 5
-      delay: 5
+      shell: |
+        until kubectl get pods -n elk -l node.type=kibana -o jsonpath='{.items[0].status.phase}' | grep -m 1 '1/1'; do
+          sleep 1
+        done
+
+    - name: Get the name of the myspotify pod
+      become: false
+      shell: "kubectl get pods -n elk -l node.type=kibana -o jsonpath='{.items[0].metadata.name}'"
+      register: kibana_pod_name
+
+    - name: Perform port forwarding for myspotify pod
+      become: false
+      shell: "kubectl port-forward {{ kibana_pod_name.stdout }} 5601:5601 -n elk"
+      async: 600
+      poll: 0
+
 
     
 
