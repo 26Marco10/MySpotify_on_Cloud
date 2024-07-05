@@ -11,7 +11,7 @@ La musica evoca una vasta gamma di emozioni, ma comprendere e quantificare quest
 ## Architettura del Sistema
 
 L'infrastruttura del progetto è costruita su tecnologie avanzate, distribuite su una macchina EC2 di AWS e orchestrate tramite Kubernetes con Minikube per garantire scalabilità e affidabilità.
- <img src="images/infrastruttura.png" alt="Personal" width="900" height="300">
+ <img src="images/infrastruttura.png" alt="Personal" width="900" height="500">
 
 ### Componenti Principali
 
