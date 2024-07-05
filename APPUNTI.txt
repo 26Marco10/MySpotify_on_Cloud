@@ -81,3 +81,5 @@ kubectl get pods -n elk
 sostituisci in tutti i file di myspotify il dominio dell'istanza e poi pusha
 kubectl port-forward svc/nomeservizio porta:porta(per esempio 8000:8000) -n elk
 vai su dominio:portaesposta(tipo 30002)
+
+ricordati di aggiungere sul sito di Spotify il link http://dominioaws:32008/callback e su github di aggiornare il segreto del dominio
