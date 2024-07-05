@@ -68,8 +68,8 @@ L'infrastruttura del progetto è costruita su tecnologie avanzate, distribuite s
 
 6. **Accedi a MySpotify**:
     - Visita http://dominioaws:32008 per accedere a MySpotify.
-
-Uploading Registrazione.mov…
+   
+https://github.com/26Marco10/MySpotify_on_Cloud/assets/84904090/660be32c-faea-4dbe-97d7-0adfaeb6c0ca
     
 7. **Accedi a Kibana**:
     - Visita http://dominioaws:30002 per visualizzare i risultati del sentiment su Kibana.
