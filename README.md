@@ -86,3 +86,4 @@ Questo progetto combina tecniche avanzate di data engineering e machine learning
 
 ### Link di riferimento
 - Questo progetto è la versione aggiornata e messa in cloud di https://github.com/26Marco10/TAP.git
+
