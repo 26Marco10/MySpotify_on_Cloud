@@ -33,7 +33,7 @@
     - name: Wait for myspotify pod to be running
       become: false
       shell: |
-        until kubectl get pods -n elk -l app=my-spotify -o jsonpath='{.items[0].status.phase}' | grep -m 1 'Running'; do
+        until kubectl get pods -n elk -l app=my-spotify | grep -m 1 '1/1'; do
           sleep 1
         done
 
