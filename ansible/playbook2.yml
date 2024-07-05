@@ -11,12 +11,12 @@
           sleep 1
         done
 
-    - name: Get the name of the myspotify pod
+    - name: Get the name of the kibana pod
       become: false
       shell: "kubectl get pods -l node.type=kibana-node -n elk -o jsonpath='{.items[0].metadata.name}'"
       register: kibana_pod_name
 
-    - name: Perform port forwarding for myspotify pod
+    - name: Perform port forwarding for kibana pod
       become: false
       shell: "kubectl port-forward {{ kibana_pod_name.stdout }} 5601:5601 -n elk"
       async: 600
