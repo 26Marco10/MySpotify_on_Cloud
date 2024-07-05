@@ -68,7 +68,8 @@ L'infrastruttura del progetto è costruita su tecnologie avanzate, distribuite s
 
 6. **Accedi a MySpotify**:
     - Visita http://dominioaws:32008 per accedere a MySpotify.
-5. **Accedi a Kibana**:
+    
+7. **Accedi a Kibana**:
     - Visita http://dominioaws:30002 per visualizzare i risultati del sentiment su Kibana.
  
  ## Grafi di Kibana
