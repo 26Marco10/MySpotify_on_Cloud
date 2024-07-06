@@ -67,12 +67,12 @@ L'infrastruttura del progetto è costruita su tecnologie avanzate, distribuite s
     - Se modificato qualcosa all'interno della cartella, fare push. Questo eseguirà le istruzioni nelle Github Actions.
 
 6. **Accedi a MySpotify**:
-    - Visita http://dominioaws:32008 per accedere a MySpotify.
+    - Visita http://dominioec2:32008 per accedere a MySpotify.
    
 https://github.com/26Marco10/MySpotify_on_Cloud/assets/84904090/660be32c-faea-4dbe-97d7-0adfaeb6c0ca
     
 7. **Accedi a Kibana**:
-    - Visita http://dominioaws:30002 per visualizzare i risultati del sentiment su Kibana.
+    - Visita http://dominioec2:30002 per visualizzare i risultati del sentiment su Kibana.
  
  ## Grafi di Kibana
  <img src="images/Personal.png" alt="Personal" width="900" height="300">
